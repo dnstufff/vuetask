@@ -6,6 +6,11 @@
 </template>
 
 <script>
+function randomId () {
+  return Math.random()
+    .toString()
+    .substr(2, 10)
+}
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
