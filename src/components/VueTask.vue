@@ -21,7 +21,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  name: 'HelloWorld',
+  name: 'VueTask',
   created () {
     this.$store.dispatch('loadTasks')
   },
@@ -43,8 +43,7 @@ export default {
     },
     setNewTask (e) {
       this.$store.dispatch('setNewTask', e)
-    },
-
+    }
   }
 }
 </script>
@@ -68,7 +67,5 @@ export default {
   body > .el-container {
     margin-bottom: 40px;
   }
-
-
 
 </style>

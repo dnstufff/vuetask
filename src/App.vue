@@ -1,22 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <VueTask msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-function randomId () {
-  return Math.random()
-    .toString()
-    .substr(2, 10)
-}
-import HelloWorld from './components/HelloWorld.vue'
+
+import VueTask from './components/VueTask.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    VueTask
   }
 }
 </script>
