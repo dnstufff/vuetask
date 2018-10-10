@@ -1,12 +1,11 @@
-import { shallowMount } from '@vue/test-utils'
+// This test will always fail because there is 'vuex' involved.
+// Simulating vuex stores with mocks is cumbersome and out of the scope of the interview task.
+import { mount } from '@vue/test-utils'
 import VueTask from '@/components/VueTask.vue'
 
-describe('VueTask.vue', () => {
-  it('renders props.msg when passed', () => {
-    const msg = 'new message'
-    const wrapper = shallowMount(VueTask, {
-      propsData: { msg }
-    })
-    expect(wrapper.text()).toMatch(msg)
+describe('VueTask', () => {
+  test('is a Vue instance', () => {
+    const wrapper = mount(VueTask)
+    expect(wrapper.isVueInstance()).toBeTruthy()
   })
 })

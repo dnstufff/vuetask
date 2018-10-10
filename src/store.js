@@ -31,6 +31,11 @@ export default new Vuex.Store({
     ADD_TASK (state, taskObject) {
       state.tasks.push(taskObject)
     },
+    REMOVE_TASK (state, task) {
+      state.tasks = state.tasks.filter(function (item) {
+        return task.id !== item.id
+      })
+    },
     CLEAR_NEW_TASK (state) {
       state.newTask = ''
     }
@@ -38,14 +43,13 @@ export default new Vuex.Store({
   actions: {
     loadTasks ({ commit }) {
       axios
-        .get('http://localhost:3000/tasks')
+        .get('http://localhost:3005/tasks')
         .then(r => r.data)
         .then(tasks => {
           commit('SET_TASKS', tasks)
         })
     },
     addTask ({ commit, state }) {
-      console.log(commit, state);
       if (!state.newTask) {
         // do not add empty tasks
         return
@@ -55,14 +59,22 @@ export default new Vuex.Store({
         completed: false,
         id: randomId()
       }
-      axios.post('http://localhost:3000/tasks', task).then(_ => {
+      axios.post('http://localhost:3005/tasks', task).then(_ => {
         commit('ADD_TASK', task)
       })
+    },
+    removeTask ({ commit }, task) {
+      axios.delete('http://localhost:3005/tasks/' + task.id, task).then(_ => {
+        commit('REMOVE_TASK', task)
+      })
+    },
+    changeState ({ commit }, task) {
+      axios.put('http://localhost:3005/tasks/' + task.id, task)
     },
     clearNewTask ({ commit }) {
       commit('CLEAR_NEW_TASK')
     },
-    setNewTask({ commit }, task) {
+    setNewTask ({ commit }, task) {
       commit('SET_NEW_TASK', task)
     }
   }

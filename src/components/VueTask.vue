@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <el-row>
-          <el-col :span="20"><el-input placeholder="New task" @change="setNewTask" ></el-input></el-col>
+          <el-col :span="20"><el-input ref="newTaskEl" placeholder="New task" @change="setNewTask" ></el-input></el-col>
           <el-col :span="4"><el-button type="primary" @click="addTask">Add</el-button></el-col>
         </el-row>
       </el-header>
@@ -11,17 +11,18 @@
         <el-row v-for="task in tasks" :key="task.id">
           <el-col :span="2"><el-checkbox v-model="task.completed" @change="changeState(task)"></el-checkbox></el-col>
           <el-col :span="20" align="left">{{ task.title }}</el-col>
-          <el-col :span="2"><el-button icon="el-icon-close"></el-button></el-col>
+          <el-col :span="2"><el-button icon="el-icon-close" @click="removeTask(task)"></el-button></el-col>
         </el-row>
+        <el-row v-if="!tasks.length">No tasks at this moment.</el-row>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'VueTask',
+
   created () {
     this.$store.dispatch('loadTasks')
   },
@@ -35,11 +36,15 @@ export default {
   },
   methods: {
     changeState (task) {
-
+      this.$store.dispatch('changeState', task)
     },
     addTask () {
       this.$store.dispatch('addTask')
       this.$store.dispatch('clearNewTask')
+      this.$refs.newTaskEl.clear()
+    },
+    removeTask (task) {
+      this.$store.dispatch('removeTask', task)
     },
     setNewTask (e) {
       this.$store.dispatch('setNewTask', e)
@@ -58,10 +63,19 @@ export default {
   }
 
   .el-main {
-    background-color: #E9EEF3;
     color: #333;
     text-align: center;
     line-height: 160px;
+    padding: 0;
+  }
+
+  .el-main .el-row {
+    background: white;
+    line-height: 50px;
+    border-bottom: 1px solid #B3C0D1;
+  }
+  .el-main .el-row:hover {
+    background-color: #E9EEF3;
   }
 
   body > .el-container {
