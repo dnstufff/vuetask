@@ -6,7 +6,6 @@
 </template>
 
 <script>
-
 import VueTask from './components/VueTask.vue'
 
 export default {
